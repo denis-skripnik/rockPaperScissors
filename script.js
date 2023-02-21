@@ -88,7 +88,7 @@ provider.send("eth_requestAccounts", []).then(()=>{
 )
 
 async function runGame(){
-	let _option = document.getElementById("game_item").value;
+	let _option = parseInt(document.getElementById("game_item").value);
 	let amountInEth = document.getElementById("amountInEth").value;
     let amountInWei = ethers.utils.parseEther(amountInEth.toString())
     console.log(amountInWei);
