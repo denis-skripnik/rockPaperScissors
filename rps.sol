@@ -13,7 +13,7 @@ contract RockPaperScissors{
     address owner; 
 
     //event to track result of game.
-    event Gamed(address player, uint256 amount, uint8 option, bool result); 
+    event Gamed(address player, uint256 amount, uint8 option, int8 result); 
 
     //payable = user может заплатить в BNB (главная монета в блокчейне)
     //in Constructor we assign owner's address;
@@ -29,13 +29,13 @@ contract RockPaperScissors{
         require(msg.value*2 <= address(this).balance, "Contract balance is insuffieient ");
 
         //PseudoRandom and check with _option 
-        uint8 contractOption = block.timestamp*block.gaslimit%3; 
+        uint contractOption = block.timestamp*block.gaslimit%3; 
         int8 result = 0;
-if (option == contractOption) {
-            payable(msg.sender).transfer(msg.value*0.5);
-                } else if ((option == 0 && contractOption == 1) ||
-        option == 2 && contractOption == 0) ||
-                option == 1 && contractOption == 2)) {
+if (_option == contractOption) {
+    payable(msg.sender).transfer(msg.value/2);
+                } else if ((_option == 0 && contractOption == 1) ||
+        (_option == 2 && contractOption == 0) ||
+                (_option == 1 && contractOption == 2)) {
             result = 1;
         } else {
         result = -1;

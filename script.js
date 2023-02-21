@@ -1,5 +1,68 @@
 const contractAddress = "0x125910Ea9c6d1cCF5ae66967F4E202b8e3743787";
-const contractABI = []
+const contractABI = [
+	{
+		"inputs": [],
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "player",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint8",
+				"name": "option",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "int8",
+				"name": "result",
+				"type": "int8"
+			}
+		],
+		"name": "Gamed",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_option",
+				"type": "uint8"
+			}
+		],
+		"name": "selectRPS",
+		"outputs": [
+			{
+				"internalType": "int8",
+				"name": "",
+				"type": "int8"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
 
 const provider = new ethers.providers.Web3Provider(window.ethereum, 97)//ChainID 97 BNBtestnet
 let signer;
