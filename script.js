@@ -88,10 +88,10 @@ provider.send("eth_requestAccounts", []).then(()=>{
 )
 
 async function runGame(){
-    let amountInEth = document.getElementById("amountInEth").value;
+	let _option = document.getElementById("game_item").value;
+	let amountInEth = document.getElementById("amountInEth").value;
     let amountInWei = ethers.utils.parseEther(amountInEth.toString())
     console.log(amountInWei);
-    let _option = document.getElementById("game_item").value;
 
     let resultOfGame = await contract.selectRPS(_option, {value: amountInWei});
     const res = await resultOfGame.wait();
