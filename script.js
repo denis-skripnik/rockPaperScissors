@@ -1,4 +1,4 @@
-const contractAddress = "0x125910Ea9c6d1cCF5ae66967F4E202b8e3743787";
+const contractAddress = "0x74b66f900ce1a743ac0df4bcabf29a31b87cbaad";
 const contractABI = [
 	{
 		"inputs": [],
@@ -25,6 +25,12 @@ const contractABI = [
 				"internalType": "uint8",
 				"name": "option",
 				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "contractOption",
+				"type": "uint256"
 			},
 			{
 				"indexed": false,
@@ -91,7 +97,6 @@ async function runGame(){
 	let _option = parseInt(document.getElementById("game_item").value);
 	let amountInEth = document.getElementById("amountInEth").value;
     let amountInWei = ethers.utils.parseEther(amountInEth.toString())
-    console.log(amountInWei);
 
     let resultOfGame = await contract.selectRPS(_option, {value: amountInWei});
     const res = await resultOfGame.wait();
@@ -101,14 +106,14 @@ async function runGame(){
 }
 
 async function handleEvent(){
-
-    let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 10000, await provider.getBlockNumber());
+    let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 5000, await provider.getBlockNumber());
     let queryResultRecent = queryResult[queryResult.length-1]
     let amount = await queryResultRecent.args.amount.toString();
-    let player = await queryResultRecent.args.player.toString();
+	let player = await queryResultRecent.args.player.toString();
     let option = await queryResultRecent.args.option.toString();
-    let result = await queryResultRecent.args.result.toString();
-let status = 'WIN 🎉';
+    let contractOption = await queryResultRecent.args.contractOption.toString();
+	let result = await queryResultRecent.args.result.toString();
+	let status = 'WIN 🎉';
 if (result == 0) {
     status = 'Draw. 50% of the bet will be refunded.'
 } else if (result == -1) {
@@ -119,6 +124,7 @@ if (result == 0) {
     stake amount: ${ethers.utils.formatEther(amount.toString())} BNB, 
     player: ${player}, 
     player chose: ${game_variant[option]}, 
+    Contract chose: ${game_variant[contractOption]},
     result: ${status}`;
     console.log(resultLogs);
 
@@ -126,11 +132,3 @@ if (result == 0) {
     resultLog.innerText = resultLogs;
     
 }
-
-
-
-
-
-
-
-

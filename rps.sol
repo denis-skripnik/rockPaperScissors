@@ -13,7 +13,7 @@ contract RockPaperScissors{
     address owner; 
 
     //event to track result of game.
-    event Gamed(address player, uint256 amount, uint8 option, int8 result); 
+    event Gamed(address player, uint256 amount, uint8 option, uint8 contractOption, int8 result); 
 
     //payable = user может заплатить в BNB (главная монета в блокчейне)
     //in Constructor we assign owner's address;
@@ -42,8 +42,7 @@ if (_option == contractOption) {
         }
 
         //Emiting event of Coin Flip
-        emit Gamed(msg.sender, msg.value, _option, result);
-
+        emit Gamed(msg.sender, msg.value, _option, contractOption, result);
 
         //If user wins he doubles his stake
         if (result == 1){
@@ -60,4 +59,3 @@ if (_option == contractOption) {
     }
 
 }
-
