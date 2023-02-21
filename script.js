@@ -96,34 +96,8 @@ async function runGame(){
     let resultOfGame = await contract.selectRPS(_option, {value: amountInWei});
     const res = await resultOfGame.wait();
     console.log(res);
-    //console.log( await res.events[0].args.player.toString());
-
-    let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 10000, await provider.getBlockNumber());
-    let queryResultRecent = queryResult[queryResult.length-1]
-    //console.log(queryResult[queryResult.length-1].args);
-
-    let amount = await queryResultRecent.args.amount.toString();
-    let player = await queryResultRecent.args.player.toString();
-    let option = await queryResultRecent.args.option.toString();
-    let result = await queryResultRecent.args.result.toString();
-    let status = 'WIN 🎉';
-    if (result == 0) {
-        status = 'Draw. 50% of the bet will be refunded.'
-    } else if (result == -1) {
-        status = 'LOSE 😥';
-    }
     
-    let resultLogs = `
-    stake amount: ${ethers.utils.formatEther(amount.toString())} BNB, 
-    player: ${player}, 
-    player chose: ${game_variant[option]}, 
-    result: ${status}`;
-    console.log(resultLogs);
-
-    let resultLog = document.getElementById("resultLog");
-    resultLog.innerText = resultLogs;
-
-    handleEvent();
+	await handleEvent();
 }
 
 async function handleEvent(){
