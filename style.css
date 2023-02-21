@@ -1,0 +1,79 @@
+/* Reset the standard styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Setting the unit of measurement in the entire document */
+html {
+  font-size: 16px;
+}
+
+/* Setting basic styles for body */
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+
+/* Setting styles for the h1 header */
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* Setting styles for paragraphs */
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Setting styles for buttons */
+button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #0069d9;
+}
+
+/* Setting styles for the input field */
+input[type="number"] {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Setting styles for select */
+select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Setting styles for the result */
+#resultLog {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
