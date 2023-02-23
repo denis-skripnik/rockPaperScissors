@@ -75,23 +75,26 @@ let signer;
 let contract;
 let game_variant = ['Rock', 'Scissors', 'Paper'];
 
-
 const event = "Gamed";
 
-provider.send("eth_requestAccounts", []).then(()=>{
-    provider.listAccounts().then( (accounts) => {
-        signer = provider.getSigner(accounts[0]); //account in metamask
-        
-        contract = new ethers.Contract(
-            contractAddress,
-            contractABI,
-            signer
-        )
-     
-    }
-    )
-}
-)
+async function checkNetwork() {
+	const chainId = await provider.getNetwork().then(network => network.chainId)
+	if (chainId != 97) {
+	  alert(`Please switch to BSC Testnet (chainId: 97) in your wallet`)
+	  await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x61' }] })
+	  await ethereum.request({ method: 'wallet_addEthereumChain', params: [{ chainId: '0x61', rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545' }] })
+	  throw new Error(`Incorrect network selected: ${chainId}. Please switch to BSC Testnet (chainId: 97) in your wallet`)
+	}
+  }
+  
+  async function initContract() {
+	await checkNetwork()
+	const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+	signer = provider.getSigner(accounts[0])
+	contract = new ethers.Contract(contractAddress, contractABI, signer)
+  }
+  
+  initContract()
 
 async function runGame(){
 	let _option = parseInt(document.getElementById("game_item").value);
