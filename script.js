@@ -92,17 +92,36 @@ provider.send("eth_requestAccounts", []).then(()=>{
 }
 )
 
-async function initContract() {
-    await ethereum.enable();
-    const accounts = await ethereum.request({ method: 'eth_accounts' });
-    signer = provider.getSigner(accounts[0]);
-    contract = new ethers.Contract(contractAddress, contractABI, signer);
-}
+const targetNetworkId = '0x97';
 
-initContract();
+const checkNetwork = async () => {
+	if (window.ethereum) {
+	  const currentChainId = await window.ethereum.request({
+		method: 'eth_chainId',
+	  });
+  
+	  // return true if network id is the same
+	  if (currentChainId == targetNetworkId) return true;
+	  // return false is network id is different
+	  return false;
+	}
+  };
+
+const switchNetwork = async () => {
+	const network_status = await checkNetwork();
+	if (network_status === true) return;
+	await window.ethereum.request({
+	  method: 'wallet_switchEthereumChain',
+	  params: [{ chainId: 'targetNetworkId' }],
+	});
+	// refresh
+	window.location.reload();
+  };
+
+switchNetwork();
 
 async function runGame(){
-	await initContract();
+	await switchNetwork();
 	let _option = parseInt(document.getElementById("game_item").value);
 	let amountInEth = document.getElementById("amountInEth").value;
     let amountInWei = ethers.utils.parseEther(amountInEth.toString())
@@ -115,7 +134,7 @@ async function runGame(){
 }
 
 async function handleEvent(){
-	await initContract();
+    await switchNetwork();
 	let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 5000, await provider.getBlockNumber());
     let queryResultRecent = queryResult[queryResult.length-1]
     let amount = await queryResultRecent.args.amount.toString();
