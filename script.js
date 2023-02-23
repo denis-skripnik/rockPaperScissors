@@ -77,26 +77,32 @@ let game_variant = ['Rock', 'Scissors', 'Paper'];
 
 const event = "Gamed";
 
-async function checkNetwork() {
-	const chainId = await provider.getNetwork().then(network => network.chainId)
-	if (chainId != 97) {
-	  alert(`Please switch to BSC Testnet (chainId: 97) in your wallet`)
-	  await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x61' }] })
-	  await ethereum.request({ method: 'wallet_addEthereumChain', params: [{ chainId: '0x61', rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545' }] })
-	  throw new Error(`Incorrect network selected: ${chainId}. Please switch to BSC Testnet (chainId: 97) in your wallet`)
-	}
-  }
-  
-  async function initContract() {
-	await checkNetwork()
-	const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-	signer = provider.getSigner(accounts[0])
-	contract = new ethers.Contract(contractAddress, contractABI, signer)
-  }
-  
-  initContract()
+provider.send("eth_requestAccounts", []).then(()=>{
+    provider.listAccounts().then( (accounts) => {
+        signer = provider.getSigner(accounts[0]); //account in metamask
+        
+        contract = new ethers.Contract(
+            contractAddress,
+            contractABI,
+            signer
+        )
+     
+    }
+    )
+}
+)
+
+async function initContract() {
+    await ethereum.enable();
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+    signer = provider.getSigner(accounts[0]);
+    contract = new ethers.Contract(contractAddress, contractABI, signer);
+}
+
+initContract();
 
 async function runGame(){
+	await initContract();
 	let _option = parseInt(document.getElementById("game_item").value);
 	let amountInEth = document.getElementById("amountInEth").value;
     let amountInWei = ethers.utils.parseEther(amountInEth.toString())
@@ -109,7 +115,8 @@ async function runGame(){
 }
 
 async function handleEvent(){
-    let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 5000, await provider.getBlockNumber());
+	await initContract();
+	let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 5000, await provider.getBlockNumber());
     let queryResultRecent = queryResult[queryResult.length-1]
     let amount = await queryResultRecent.args.amount.toString();
 	let player = await queryResultRecent.args.player.toString();
