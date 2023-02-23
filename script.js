@@ -92,14 +92,14 @@ provider.send("eth_requestAccounts", []).then(()=>{
 }
 )
 
-const targetNetworkId = 97;
+const targetNetworkId = '0x97';
 
 const checkNetwork = async () => {
 	if (window.ethereum) {
 	  const currentChainId = await window.ethereum.request({
 		method: 'eth_chainId',
 	  });
-  
+  window.alert(currentChainId);
 	  // return true if network id is the same
 	  if (currentChainId == targetNetworkId) return true;
 	  // return false is network id is different
@@ -112,7 +112,7 @@ const switchNetwork = async () => {
 	if (network_status === true) return;
 	await window.ethereum.request({
 	  method: 'wallet_switchEthereumChain',
-	  params: [{ chainId: 'targetNetworkId' }],
+	  params: [{ chainId: targetNetworkId }],
 	});
 	// refresh
 	window.location.reload();
