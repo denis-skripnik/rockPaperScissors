@@ -1,4 +1,4 @@
-const contractAddress = "0xc5076e7470e7bb1B16A84142F79F6fCbA83fb9fD";
+const contractAddress = "0x37FCf3b5f8b16620a796F04ACfAE326E4b68e9FF";
 const contractABI = [
 	{
 		"inputs": [],
@@ -124,7 +124,8 @@ async function runGame(){
 	await switchNetwork();
 	let _option = parseInt(document.getElementById("game_item").value);
 	let amountInEth = document.getElementById("amountInEth").value;
-    let amountInWei = ethers.utils.parseEther(amountInEth.toString())
+    
+	let amountInWei = ethers.utils.parseEther(amountInEth.toString())
 
     let resultOfGame = await contract.selectRPS(_option, {value: amountInWei});
     const res = await resultOfGame.wait();
