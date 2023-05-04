@@ -70,13 +70,8 @@ const contractABI = [
 	}
 ]
 
-const faucetAddress = '0x4ed503d05BbE30C2F5E2066C609cF65aa2733721';
+const faucetAddress = '0x3341C1e8Fd8c38D738AD984b9b4EEFc2e48277f5';
 const faucetABI = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
 	{
 		"inputs": [
 			{
