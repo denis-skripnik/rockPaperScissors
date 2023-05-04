@@ -13,7 +13,7 @@ contract RockPaperScissors{
     address owner; 
 
     //event to track result of game.
-    event Gamed(address player, uint256 amount, uint8 option, uint8 contractOption, int8 result); 
+    event Gamed(address player, uint256 amount, uint256 option, uint256 contractOption, int8 result); 
 
     //payable = user может заплатить в BNB (главная монета в блокчейне)
     //in Constructor we assign owner's address;
