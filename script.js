@@ -179,7 +179,7 @@ async function faucet(){
 
 	let resultOfFaucet = await faucetContract.requestToken();
     const res = await resultOfFaucet.wait();
-    console.log(res);
+    window.alert(JSON.stringify(res));
 }
 
 async function handleEvent(){
