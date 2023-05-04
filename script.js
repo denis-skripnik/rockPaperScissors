@@ -70,9 +70,49 @@ const contractABI = [
 	}
 ]
 
+const faucetAddress = '0x4ed503d05BbE30C2F5E2066C609cF65aa2733721';
+const faucetABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "lastRequest",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "requestToken",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	}
+]
+
 const provider = new ethers.providers.Web3Provider(window.ethereum, 9000)//ChainID 97 Meganet testnet
 let signer;
 let contract;
+let faucetContract;
 let game_variant = ['Rock', 'Scissors', 'Paper'];
 
 const event = "Gamed";
@@ -87,6 +127,11 @@ provider.send("eth_requestAccounts", []).then(()=>{
             signer
         )
      
+		faucetContract = new ethers.Contract(
+            faucetAddress,
+            faucetABI,
+            signer
+        )
     }
     )
 }
@@ -128,6 +173,16 @@ async function runGame(){
 	let amountInWei = ethers.utils.parseEther(amountInEth.toString())
 
     let resultOfGame = await contract.selectRPS(_option, {value: amountInWei});
+    const res = await resultOfGame.wait();
+    console.log(res);
+    
+	await handleEvent();
+}
+
+async function faucet(){
+	await switchNetwork();
+
+	let resultOfFaucet = await faucetContract.requestToken();
     const res = await resultOfGame.wait();
     console.log(res);
     
