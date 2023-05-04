@@ -177,9 +177,13 @@ async function runGame(){
 async function faucet(){
 	await switchNetwork();
 
+try {
 	let resultOfFaucet = await faucetContract.requestToken();
     const res = await resultOfFaucet.wait();
     window.alert(JSON.stringify(res));
+} catch(e) {
+	window.alert(JSON.stringify(e));
+}
 }
 
 async function handleEvent(){
