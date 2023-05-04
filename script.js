@@ -1,4 +1,4 @@
-const contractAddress = "0x74b66f900ce1a743ac0df4bcabf29a31b87cbaad";
+const contractAddress = "0xc5076e7470e7bb1B16A84142F79F6fCbA83fb9fD";
 const contractABI = [
 	{
 		"inputs": [],
@@ -22,9 +22,9 @@ const contractABI = [
 			},
 			{
 				"indexed": false,
-				"internalType": "uint8",
+				"internalType": "uint256",
 				"name": "option",
-				"type": "uint8"
+				"type": "uint256"
 			},
 			{
 				"indexed": false,
@@ -70,7 +70,7 @@ const contractABI = [
 	}
 ]
 
-const provider = new ethers.providers.Web3Provider(window.ethereum, 97)//ChainID 97 BNBtestnet
+const provider = new ethers.providers.Web3Provider(window.ethereum, 9000)//ChainID 97 Meganet testnet
 let signer;
 let contract;
 let game_variant = ['Rock', 'Scissors', 'Paper'];
@@ -92,14 +92,14 @@ provider.send("eth_requestAccounts", []).then(()=>{
 }
 )
 
-const targetNetworkId = '0x61';
+const targetNetworkId = '0x9000';
 
 const checkNetwork = async () => {
 	if (window.ethereum) {
 	  const currentChainId = await window.ethereum.request({
 		method: 'eth_chainId',
 	  });
-
+window.alert(currentChainId);
 	  // return true if network id is the same
 	  if (currentChainId == targetNetworkId) return true;
 	  // return false is network id is different
@@ -150,7 +150,7 @@ if (result == 0) {
 }
 
     let resultLogs = `
-    stake amount: ${ethers.utils.formatEther(amount.toString())} BNB, 
+    stake amount: ${ethers.utils.formatEther(amount.toString())} MGTEST, 
     player: ${player}, 
     player chose: ${game_variant[option]}, 
     Contract chose: ${game_variant[contractOption]},
