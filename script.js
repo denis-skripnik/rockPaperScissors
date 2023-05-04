@@ -183,10 +183,8 @@ async function faucet(){
 	await switchNetwork();
 
 	let resultOfFaucet = await faucetContract.requestToken();
-    const res = await resultOfGame.wait();
+    const res = await resultOfFaucet.wait();
     console.log(res);
-    
-	await handleEvent();
 }
 
 async function handleEvent(){
