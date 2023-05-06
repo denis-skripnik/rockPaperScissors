@@ -121,7 +121,7 @@ const event = "Gamed";
 provider.send("eth_requestAccounts", []).then(()=>{
     provider.listAccounts().then( (accounts) => {
         signer = provider.getSigner(accounts[0]); //account in metamask
-        const signerAddress = signer.getAddress();
+        const signerAddress = await signer.getAddress();
         contract = new ethers.Contract(
             contractAddress,
             contractABI,
