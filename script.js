@@ -112,6 +112,7 @@ const faucetABI = [
 
 const provider = new ethers.providers.Web3Provider(window.ethereum, 9000)//ChainID 97 Meganet testnet
 let signer;
+let signerAddress;
 let contract;
 let faucetContract;
 let game_variant = ['Rock', 'Scissors', 'Paper'];
@@ -121,8 +122,8 @@ const event = "Gamed";
 provider.send("eth_requestAccounts", []).then(()=>{
     provider.listAccounts().then( async (accounts) => {
         signer = provider.getSigner(accounts[0]); //account in metamask
-        const signerAddress = await signer.getAddress();
-		window.alert(signerAddress);
+        signerAddress = await signer.getAddress();
+
 		contract = new ethers.Contract(
             contractAddress,
             contractABI,
