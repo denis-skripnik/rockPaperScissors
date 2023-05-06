@@ -122,7 +122,8 @@ provider.send("eth_requestAccounts", []).then(()=>{
     provider.listAccounts().then( (accounts) => {
         signer = provider.getSigner(accounts[0]); //account in metamask
         const signerAddress = await signer.getAddress();
-        contract = new ethers.Contract(
+        
+		contract = new ethers.Contract(
             contractAddress,
             contractABI,
             signer
