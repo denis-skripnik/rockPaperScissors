@@ -70,7 +70,7 @@ const contractABI = [
 	}
 ]
 
-const faucetAddress = '0x3341C1e8Fd8c38D738AD984b9b4EEFc2e48277f5';
+const faucetAddress = '0xa0F71bBc9449f71C73A3d1e26DBC5CEaEf171E54';
 const faucetABI = [
 	{
 		"inputs": [
@@ -92,7 +92,13 @@ const faucetABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "recipient",
+				"type": "address"
+			}
+		],
 		"name": "requestToken",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -115,7 +121,7 @@ const event = "Gamed";
 provider.send("eth_requestAccounts", []).then(()=>{
     provider.listAccounts().then( (accounts) => {
         signer = provider.getSigner(accounts[0]); //account in metamask
-        
+        const signerAddress = signer.getAddress();
         contract = new ethers.Contract(
             contractAddress,
             contractABI,
@@ -178,7 +184,7 @@ async function faucet(){
 	await switchNetwork();
 
 try {
-	let resultOfFaucet = await faucetContract.requestToken();
+	let resultOfFaucet = await faucetContract.requestToken(signerAddress);
     const res = await resultOfFaucet.wait();
     window.alert(JSON.stringify(res));
 } catch(e) {
@@ -203,7 +209,7 @@ if (result == 0) {
 }
 
     let resultLogs = `
-    stake amount: ${ethers.utils.formatEther(amount.toString())} MGTEST, 
+    stake amount: ${ethers.utils.formatEther(amount.toString())} PIZZA, 
     player: ${player}, 
     player chose: ${game_variant[option]}, 
     Contract chose: ${game_variant[contractOption]},
