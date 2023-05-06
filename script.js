@@ -119,10 +119,9 @@ let game_variant = ['Rock', 'Scissors', 'Paper'];
 const event = "Gamed";
 
 provider.send("eth_requestAccounts", []).then(()=>{
-    provider.listAccounts().then( (accounts) => {
+    provider.listAccounts().then( async (accounts) => {
         signer = provider.getSigner(accounts[0]); //account in metamask
         const signerAddress = await signer.getAddress();
-        
 		contract = new ethers.Contract(
             contractAddress,
             contractABI,
