@@ -70,7 +70,7 @@ const contractABI = [
 	}
 ]
 
-const faucetAddress = '0xa0F71bBc9449f71C73A3d1e26DBC5CEaEf171E54';
+const faucetAddress = '0xbc05Cc40eC89554ae9067426d12Cc087b377084C';
 const faucetABI = [
 	{
 		"inputs": [
@@ -94,8 +94,27 @@ const faucetABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "address payable",
-				"name": "recipient",
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "lastRequestFromWhiteList",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "recipientAddress",
 				"type": "address"
 			}
 		],
