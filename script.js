@@ -234,7 +234,7 @@ if (result == 0) {
 }
 
     let resultLogs = `
-    stake amount: ${ethers.utils.formatEther(amount.toString())} PIZZA, 
+    stake amount: ${ethers.utils.formatEther(amount.toString())} MEGA2, 
     player: ${player}, 
     player chose: ${game_variant[option]}, 
     Contract chose: ${game_variant[contractOption]},
