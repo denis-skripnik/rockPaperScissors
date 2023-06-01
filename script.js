@@ -129,7 +129,7 @@ const faucetABI = [
 	}
 ]
 
-const provider = new ethers.providers.Web3Provider(window.ethereum, 9000)//ChainID 97 Meganet testnet
+const provider = new ethers.providers.Web3Provider(window.ethereum, 3333)//ChainID 97 Meganet testnet
 let signer;
 let signerAddress;
 let contract;
@@ -159,7 +159,7 @@ provider.send("eth_requestAccounts", []).then(()=>{
 }
 )
 
-const targetNetworkId = '0x2328';
+const targetNetworkId = '0xd05';
 
 const checkNetwork = async () => {
 	if (window.ethereum) {
