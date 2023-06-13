@@ -12,12 +12,26 @@
 
 </head>
 <body>
-    <div>
+       <h1> rock paper scissors</h1>
+    <h2>1. Select network</h2>
+<form>
+<label for="id3333">Meganet testnet</label>
+<input type="radio" name="network" id="id3333" onclick="switchNetwork(3333)" value="Meganet testnet 2">
+<label for="id167005">Taiko testnet</label>
+<input type="radio" name="network" id="id167005" onclick="switchNetwork(167005)" value="Taiko testnet">
+<label for="id84531">Base Goerli</label>
+<input type="radio" name="network" id="id84531" onclick="switchNetwork(84531)" value="Base Goerli">
+<label for="id534353">Scroll Alpha Testnet</label>
+<input type="radio" name="network" id="id534353" onclick="switchNetwork(534353)" value="Scroll Alpha Testnet">
+<label for="id59140">Linea testnet</label>
+<input type="radio" name="network" id="id59140" onclick="switchNetwork(59140)" value="Linea Testnet">
+</form>
+	<div id="faucetBlock">
 	<button onclick="faucet()">Faucet</button>
 	</div>
 	<div>
-        <h1> rock paper scissors</h1>
-        <p> Add amount in MEGA2 to play</p>
+        <h2>2. Play now!</h2>
+		<p> Add amount in <span id="token">MEGA2</span> to play</p>
         <input type="number" min = "0" id = "amountInEth">
         <p>Choose a game item</p>
 <select id="game_item">

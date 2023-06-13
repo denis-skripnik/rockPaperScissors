@@ -1,4 +1,29 @@
-const contractAddress = "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4";
+const contracts = {
+	"3333": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
+	"167005": "0x73C9F6e1B870a9447E329a3d6D20360D56988A0f",
+	"84531": "0xce1e3733c981f19f340a6eefe8f6031ccd880c39",
+	"534353": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
+	"59140": "0xe03e74a3ffac37da8389deed05cd0fd826aa472b"
+}
+
+const explorers = {
+	"3333": "https://scan.testnet.metagarden.io",
+	"167005": "https://explorer.test.taiko.xyz",
+	"84531": "https://goerli.basescan.org",
+	"534353": "https://blockscout.scroll.io",
+	"59140": "https://goerli.lineascan.build"
+}
+
+const tokens = {
+	"3333": "MEGA2",
+	"167005": "ETH",
+	"84531": "ETH",
+	"534353": "ETH",
+	"59140": "ETH"
+}
+
+var chain_id = "3333";
+
 const contractABI = [
 	{
 		"inputs": [],
@@ -114,7 +139,7 @@ const faucetABI = [
 	}
 ]
 
-const provider = new ethers.providers.Web3Provider(window.ethereum, 3333)//ChainID 97 Meganet testnet
+var provider = new ethers.providers.Web3Provider(window.ethereum, "any")
 let signer;
 let signerAddress;
 let contract;
@@ -123,30 +148,20 @@ let game_variant = ['Rock', 'Scissors', 'Paper'];
 
 const event = "Gamed";
 
+var contractAddress = contracts[chain_id];
+
 provider.send("eth_requestAccounts", []).then(()=>{
     provider.listAccounts().then( async (accounts) => {
         signer = provider.getSigner(accounts[0]); //account in metamask
         signerAddress = await signer.getAddress();
 
-		contract = new ethers.Contract(
-            contractAddress,
-            contractABI,
-            signer
-        )
-     
-		faucetContract = new ethers.Contract(
-            faucetAddress,
-            faucetABI,
-            signer
-        )
+    
     }
     )
 }
 )
 
-const targetNetworkId = '0xd05';
-
-const checkNetwork = async () => {
+const checkNetwork = async (targetNetworkId) => {
 	if (window.ethereum) {
 	  const currentChainId = await window.ethereum.request({
 		method: 'eth_chainId',
@@ -159,25 +174,27 @@ const checkNetwork = async () => {
 	}
   };
 
-const switchNetwork = async () => {
-	const network_status = await checkNetwork();
+const switchNetwork = async (chainId) => {
+	chain_id = chainId.toString();
+document.getElementById('nativeToken').innerHTML = tokens[chain_id]
+if (chain_id !== '3333') 	document.getElementById('faucetBlock').style.display = 'none';
+const targetNetworkId = ethers.utils.hexValue(chainId);
+	const network_status = await checkNetwork(targetNetworkId);
 	if (network_status === true) return;
-	await window.ethereum.request({
+await window.ethereum.request({
 	  method: 'wallet_switchEthereumChain',
 	  params: [{ chainId: targetNetworkId }],
 	});
-	// refresh
-	window.location.reload();
+	provider = new ethers.providers.Web3Provider(window.ethereum, chainId)
   };
 
-switchNetwork();
-
-async function runGame(){
-	await switchNetwork();
+  async function runGame(){
 	let _option = parseInt(document.getElementById("game_item").value);
 	let amountInEth = document.getElementById("amountInEth").value;
     
 	let amountInWei = ethers.utils.parseEther(amountInEth.toString())
+	contractAddress = contracts[chain_id];
+	const contract = new ethers.Contract(contractAddress, contractABI, signer)
 
     let resultOfGame = await contract.selectRPS(_option, {value: amountInWei});
     const res = await resultOfGame.wait();
@@ -187,9 +204,10 @@ async function runGame(){
 }
 
 async function faucet(){
-	await switchNetwork();
+	await switchNetwork(3333);
 
 try {
+	const faucetContract = new ethers.Contract(faucetAddress, faucetABI, signer)
 	let resultOfFaucet = await faucetContract.requestToken(signerAddress);
     const res = await resultOfFaucet.wait();
     window.alert(JSON.stringify(res));
@@ -199,7 +217,8 @@ try {
 }
 
 async function handleEvent(){
-    await switchNetwork();
+	contractAddress = contracts[chain_id];
+	const contract = new ethers.Contract(contractAddress, contractABI, signer)
 	let queryResult =  await contract.queryFilter('Gamed', await provider.getBlockNumber() - 5000, await provider.getBlockNumber());
     let queryResultRecent = queryResult[queryResult.length-1]
     let amount = await queryResultRecent.args.amount.toString();
@@ -215,7 +234,7 @@ if (result == 0) {
 }
 
     let resultLogs = `
-    stake amount: ${ethers.utils.formatEther(amount.toString())} MEGA2, 
+    stake amount: ${ethers.utils.formatEther(amount.toString())} ${tokens[chain_id]}, 
     player: ${player}, 
     player chose: ${game_variant[option]}, 
     Contract chose: ${game_variant[contractOption]},

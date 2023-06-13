@@ -58,4 +58,7 @@ if (_option == contractOption) {
         payable(msg.sender).transfer(address(this).balance);
     }
 
+receive() external payable {
+    // Пустая функция, необходима для возможности отправки ETH на адрес контракта
+}
 }
