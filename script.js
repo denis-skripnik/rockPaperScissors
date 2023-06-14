@@ -4,7 +4,7 @@ const contracts = {
 	"84531": "0xce1e3733c981f19f340a6eefe8f6031ccd880c39",
 	"534353": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
 	"59140": "0xe03e74a3ffac37da8389deed05cd0fd826aa472b",
-	"97": "0x74b66f900ce1a743ac0df4bcabf29a31b87cbaad"
+	"97": "0xa18ee4748d26b6c254c67e32465c04c0b5a0c82f"
 }
 
 const explorers = {
