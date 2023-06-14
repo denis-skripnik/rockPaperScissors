@@ -3,7 +3,8 @@ const contracts = {
 	"167005": "0x73C9F6e1B870a9447E329a3d6D20360D56988A0f",
 	"84531": "0xce1e3733c981f19f340a6eefe8f6031ccd880c39",
 	"534353": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
-	"59140": "0xe03e74a3ffac37da8389deed05cd0fd826aa472b"
+	"59140": "0xe03e74a3ffac37da8389deed05cd0fd826aa472b",
+	"97": "0x74b66f900ce1a743ac0df4bcabf29a31b87cbaad"
 }
 
 const explorers = {
@@ -11,7 +12,8 @@ const explorers = {
 	"167005": "https://explorer.test.taiko.xyz",
 	"84531": "https://goerli.basescan.org",
 	"534353": "https://blockscout.scroll.io",
-	"59140": "https://goerli.lineascan.build"
+	"59140": "https://goerli.lineascan.build",
+	"97": "https://bscscan.com"
 }
 
 const tokens = {
