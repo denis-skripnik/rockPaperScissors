@@ -4,7 +4,8 @@ const contracts = {
 	"84531": "0xce1e3733c981f19f340a6eefe8f6031ccd880c39",
 	"534353": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
 	"59140": "0xe03e74a3ffac37da8389deed05cd0fd826aa472b",
-	"97": "0xa18ee4748d26b6c254c67e32465c04c0b5a0c82f"
+	"97": "0xa18ee4748d26b6c254c67e32465c04c0b5a0c82f",
+	"7001": "0x20543ab6d8a90abb0b9402bf1e83858979bbce94"
 }
 
 const explorers = {
@@ -13,7 +14,8 @@ const explorers = {
 	"84531": "https://goerli.basescan.org",
 	"534353": "https://blockscout.scroll.io",
 	"59140": "https://goerli.lineascan.build",
-	"97": "https://bscscan.com"
+	"97": "https://bscscan.com",
+	"7001": "https://explorer.zetachain.com"
 }
 
 const tokens = {
@@ -22,7 +24,8 @@ const tokens = {
 	"84531": "ETH",
 	"534353": "ETH",
 	"59140": "ETH",
-	"97": "BNB"
+	"97": "BNB",
+	"7001": "ZETA"
 }
 
 var chain_id = "3333";
@@ -180,6 +183,7 @@ const checkNetwork = async (targetNetworkId) => {
 const switchNetwork = async (chainId) => {
 	chain_id = chainId.toString();
 document.getElementById('nativeToken').innerHTML = tokens[chain_id]
+document.getElementById('smartContractAddress').innerHTML = contracts[chain_id]
 if (chain_id !== '3333') 	document.getElementById('faucetBlock').style.display = 'none';
 const targetNetworkId = ethers.utils.hexValue(chainId);
 	const network_status = await checkNetwork(targetNetworkId);

@@ -27,12 +27,15 @@
 <input type="radio" name="network" id="id59140" onclick="switchNetwork(59140)" value="Linea Testnet">
 <label for="id97">BSC testnet</label>
 <input type="radio" name="network" id="id97" onclick="switchNetwork(97)" value="BSC Testnet">
+<label for="id7001">Zetachain testnet</label>
+<input type="radio" name="network" id="id7001" onclick="switchNetwork(7001)" value="Zetachain Testnet">
 </form>
 	<div id="faucetBlock">
 	<button onclick="faucet()">Faucet</button>
 	</div>
 	<div>
         <h2>2. Play now!</h2>
+<p>Smart contract address for sending test tokens: <span id="smartContractAddress"></span></p>
 		<p> Add amount in <span id="nativeToken">MEGA2</span> to play</p>
         <input type="number" min = "0" id = "amountInEth">
         <p>Choose a game item</p>
