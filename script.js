@@ -1,5 +1,5 @@
 const contracts = {
-	"3333": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
+	"9999": "0xc5076e7470e7bb1B16A84142F79F6fCbA83fb9fD",
 	"167005": "0x73C9F6e1B870a9447E329a3d6D20360D56988A0f",
 	"84531": "0xce1e3733c981f19f340a6eefe8f6031ccd880c39",
 	"534353": "0x0f96E331b1DC1DbbC1B8526F391C52B5C8f0d7F4",
@@ -9,7 +9,7 @@ const contracts = {
 }
 
 const explorers = {
-	"3333": "https://scan.testnet.metagarden.io",
+	"9999": "https://scan.metagarden.io",
 	"167005": "https://explorer.test.taiko.xyz",
 	"84531": "https://goerli.basescan.org",
 	"534353": "https://blockscout.scroll.io",
@@ -19,7 +19,7 @@ const explorers = {
 }
 
 const tokens = {
-	"3333": "MEGA2",
+	"9999": "MEGA",
 	"167005": "ETH",
 	"84531": "ETH",
 	"534353": "ETH",
@@ -28,7 +28,7 @@ const tokens = {
 	"7001": "ZETA"
 }
 
-var chain_id = "3333";
+var chain_id = "9999";
 
 const contractABI = [
 	{
@@ -105,51 +105,10 @@ const contractABI = [
 	}
 ]
 
-const faucetAddress = '0xf38b87e411d33bA24f627719c2c3979855Bb0AD8';
-const faucetABI = [
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "lastRequest",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "recipientAddress",
-				"type": "address"
-			}
-		],
-		"name": "requestToken",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"stateMutability": "payable",
-		"type": "receive"
-	}
-]
-
 var provider = new ethers.providers.Web3Provider(window.ethereum, "any")
 let signer;
 let signerAddress;
 let contract;
-let faucetContract;
 let game_variant = ['Rock', 'Scissors', 'Paper'];
 
 const event = "Gamed";
@@ -184,7 +143,6 @@ const switchNetwork = async (chainId) => {
 	chain_id = chainId.toString();
 document.getElementById('nativeToken').innerHTML = tokens[chain_id]
 document.getElementById('smartContractAddress').innerHTML = contracts[chain_id]
-if (chain_id !== '3333') 	document.getElementById('faucetBlock').style.display = 'none';
 const targetNetworkId = ethers.utils.hexValue(chainId);
 	const network_status = await checkNetwork(targetNetworkId);
 	if (network_status === true) return;
@@ -208,19 +166,6 @@ await window.ethereum.request({
     console.log(res);
     
 	await handleEvent();
-}
-
-async function faucet(){
-	await switchNetwork(3333);
-
-try {
-	const faucetContract = new ethers.Contract(faucetAddress, faucetABI, signer)
-	let resultOfFaucet = await faucetContract.requestToken(signerAddress);
-    const res = await resultOfFaucet.wait();
-    window.alert(JSON.stringify(res));
-} catch(e) {
-	window.alert(JSON.stringify(e));
-}
 }
 
 async function handleEvent(){
